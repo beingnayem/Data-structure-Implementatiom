@@ -13,11 +13,14 @@ void dfs(int node, vector<vector<int>> &adj, vector<bool> &visited, vector<int> 
 
 void graphDFS(int nodes, vector<vector<int>> &adj, vector<int> &ls){
     vector<bool> visited(nodes, false);
+    int cnt=0;
     for(int i=0; i<nodes; i++){
         if(!visited[i]){
             dfs(i, adj, visited, ls);
+            cnt++;
         }
     }
+    cout<<"Number of connected components: "<<cnt<<endl;
 }
 
 void printAdjList(vector<vector<int>> &adj){

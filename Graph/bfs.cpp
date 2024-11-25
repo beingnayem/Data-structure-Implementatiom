@@ -1,23 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void dfs(int node, vector<vector<int>> &adj, vector<bool> &visited, vector<int> &ls){
-    visited[node]=true;
-    ls.push_back(node);
-    for(auto i:adj[node]){
-        if(!visited[i]){
-            dfs(i, adj, visited, ls);
-        }
-    }
-}
-
-void graphDFS(int nodes, vector<vector<int>> &adj, vector<int> &ls){
+vector<int> graphBFS(int nodes, vector<vector<int>> &adj){
     vector<bool> visited(nodes, false);
-    for(int i=0; i<nodes; i++){
-        if(!visited[i]){
-            dfs(i, adj, visited, ls);
+    queue<int> q;
+    vector<int> ls;
+    visited[0]=true;
+    q.push(0);
+    while(!q.empty()){
+        int node=q.front();
+        q.pop();
+        ls.push_back(node);
+        for(auto i:adj[node]){
+            if(!visited[i]){
+                q.push(i);
+                visited[i]=true;
+            }
         }
     }
+    return ls;
 }
 
 void printAdjList(vector<vector<int>> &adj){
@@ -45,12 +46,11 @@ int main(){
         adj[v].push_back(u);
     }
 
-    vector<int> ls;
-    graphDFS(n, adj, ls);
+    vector<int> ls = graphBFS(n, adj);
 
     printAdjList(adj);
 
-    cout<<"DFS Traversal:"<<endl;
+    cout<<"BFS Traversal:"<<endl;
     for(auto i: ls){
         cout<<i<<" ";
     }
